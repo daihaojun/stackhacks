@@ -1,7 +1,7 @@
 # Filename:                reset_overcloud_password.sh
 # Description:             Attempts to rest overcloud admin password
 # Supported Langauge(s):   GNU Bash 4.2.x and openstack 1.7.1
-# Time-stamp:              <2016-02-05 09:53:15 jfulton> 
+# Time-stamp:              <2016-08-11 10:56:25 jfulton> 
 # -------------------------------------------------------
 # This is only hadny for investigating a broken install. 
 # 
@@ -11,7 +11,7 @@
 PUBLIC_API_IP_PREFIX=10.19.139
 CTRL_IP=`nova list |  grep controller | awk {'print $12'} | sed s/ctlplane=//g | head -1`
 if [ -z "$CTRL_IP" ]; then echo "Cannot overcloud determine controller IP"; exit 0; fi 
-ADMIN_TOKEN=`ssh heat-admin@$CTRL_IP "sudo grep admin_token /etc/keystone/keystone.conf" | awk '{print $3}' | grep -v ADMIN`
+ADMIN_TOKEN=`ssh heat-admin@$CTRL_IP "sudo grep admin_token /etc/keystone/keystone.conf" | awk '{print $3}' | grep -v ADMIN | tail -1`
 echo "Looking for Keystone IP"
 for ip in `nova list |  grep controller | awk {'print $12'} | sed s/ctlplane=//g`; do 
     KEYSTONE_IP=`ssh heat-admin@$ip "sudo ip a | grep $PUBLIC_API_IP_PREFIX | grep 32" | awk {'print $2'} | sed 's/\/32//g'`

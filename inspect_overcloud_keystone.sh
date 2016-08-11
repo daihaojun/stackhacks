@@ -1,13 +1,19 @@
-# Filename:                reset_overcloud_password.sh
+# Filename:                inspect_overcloud_keystone.sh
 # Description:             Attempts to rest overcloud admin password
 # Supported Langauge(s):   GNU Bash 4.2.x and openstack 1.7.1
-# Time-stamp:              <2016-08-11 10:56:25 jfulton> 
+# Time-stamp:              <2016-08-11 11:06:33 jfulton> 
 # -------------------------------------------------------
-# This is only hadny for investigating a broken install. 
+# This does not actually reset the password. 
+# It is handy for investigating a broken install. 
 # 
 # Uses ideas from:
 # http://adam.younglogic.com/2015/03/troubleshoot-new-keystone/
 # -------------------------------------------------------
+echo "
+     Attempting to SSH into a controller node to get the admin token
+     Will then try to use that token to list keystone users, roles and projects.
+"
+
 PUBLIC_API_IP_PREFIX=10.19.139
 CTRL_IP=`nova list |  grep controller | awk {'print $12'} | sed s/ctlplane=//g | head -1`
 if [ -z "$CTRL_IP" ]; then echo "Cannot overcloud determine controller IP"; exit 0; fi 

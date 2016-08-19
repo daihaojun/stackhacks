@@ -1,0 +1,44 @@
+
+# 1. Lines 129-140
+# -------------------------
+# Use Ceph/Jewel for all but liberty/mitaka
+if [[ "${STABLE_RELEASE}" =~ ^(liberty|mitaka)$ ]] ; then
+  OVERCLOUD_IMAGES_DIB_YUM_REPO_CONF=${OVERCLOUD_IMAGES_DIB_YUM_REPO_CONF}"\
+    $REPO_PREFIX/CentOS-Ceph-Hammer.repo"
+else
+  OVERCLOUD_IMAGES_DIB_YUM_REPO_CONF=${OVERCLOUD_IMAGES_DIB_YUM_REPO_CONF}"\
+    $REPO_PREFIX/CentOS-Ceph-Jewel.repo"
+  # Use qemu 2.x for all but liberty/mitaka
+  OVERCLOUD_IMAGES_DIB_YUM_REPO_CONF=${OVERCLOUD_IMAGES_DIB_YUM_REPO_CONF}"\
+    $REPO_PREFIX/CentOS-Virt.repo"
+fi
+
+
+# 2. Lines 234-258
+# -------------------------
+    if [ "$TRIPLEO_OS_DISTRO" = "centos" ]; then
+        # Enable Storage/SIG Ceph repo
+        if [[ "${STABLE_RELEASE}" =~ ^(liberty|mitaka)$ ]] ; then
+            rpm -q centos-release-ceph-hammer || sudo yum -y install --enablerepo=extras centos-release-ceph-hammer
+            sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' $REPO_PREFIX/CentOS-Ceph-Hammer.repo
+        else
+            # TODO(gfidente): Replace with centos-release-ceph-jewel as above, when available
+            sudo yum-config-manager --add-repo https://raw.githubusercontent.com/CentOS-Storage-SIG/centos-release-ceph-jewel/master/CentOS-Ceph-Jewel.repo
+            sudo yum-config-manager --disable centos-ceph-jewel
+            sudo yum-config-manager --enable centos-ceph-jewel-test
+            sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' $REPO_PREFIX/CentOS-Ceph-Jewel.repo
+
+	    # Enable Virt/SIG kvm-common repo for newer versions for qemu
+	    # No repo file found for http://mirror.centos.org/centos-7/7/virt/x86_64/kvm-common/
+	    tmpfile=$(mktemp)
+	    echo "[centos-virt-sig]" >> $tmpfile
+	    echo "name=CentOS-7 - Virt-SIG" >> $tmpfile
+	    echo "baseurl=http://mirror.centos.org/centos-7/\$releasever/virt/\$basearch/kvm-common/"  >> $tmpfile
+	    echo "gpgcheck=0" >> $tmpfile
+	    echo "enabled=1" >> $tmpfile
+	    echo "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virt" >> $tmpfile
+            sudo mv $tmpfile /etc/yum.repos.d/CentOS-Virt.repo
+        fi
+    fi
+
+

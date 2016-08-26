@@ -2,7 +2,7 @@
 # Filename:                mkundercloud.sh
 # Description:             Sets up a virtual undercloud
 # Supported Langauge(s):   GNU Bash 4.2.x
-# Time-stamp:              <2016-08-19 22:46:13 jfulton> 
+# Time-stamp:              <2016-08-26 16:09:46 jfulton> 
 # -------------------------------------------------------
 # Wrapper for: 
 #  http://docs.openstack.org/developer/tripleo-docs/environments/environments.html
@@ -36,7 +36,6 @@ CLEAN=1
 # Sets up repos if desired
 DELOREAN=0
 JEWL=0
-QEMU=0
 # -------------------------------------------------------
 test "$(whoami)" != 'stack' \
     && (echo "This must be run by the stack user on a hypervisor"; exit 1)
@@ -76,19 +75,6 @@ if [ $JEWL -eq 1 ]; then
     sudo sed -i -e s/\$releasever/7/ $working_repos
     sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' $working_repos
     sudo sed -i -e 's%enabled=.*%enabled=1%' $working_repos
-fi
-# -------------------------------------------------------
-if [ $QEMU -eq 1 ]; then
-    echo "Installing repositories for CentOS Virt SIG"
-    tmpfile=$(mktemp)
-    echo "[centos-virt-sig]" >> $tmpfile
-    echo "name=CentOS-7 - Virt-SIG" >> $tmpfile
-    echo "baseurl=http://mirror.centos.org/centos-7/7/virt/\$basearch/kvm-common/"  >> $tmpfile
-    echo "gpgcheck=0" >> $tmpfile
-    echo "enabled=1" >> $tmpfile
-    echo "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virt" >> $tmpfile
-    sudo mv $tmpfile /etc/yum.repos.d/CentOS-Virt.repo
-    
 fi
 # -------------------------------------------------------
 if [ $DELOREAN -eq 1 ]; then

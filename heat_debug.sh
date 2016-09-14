@@ -2,7 +2,7 @@
 # Filename:                heat_debug.sh
 # Description:             Gathers Heat Debug info
 # Supported Langauge(s):   GNU Bash 4.2.x and Heat 0.8.0
-# Time-stamp:              <2016-09-12 10:27:26 jfulton> 
+# Time-stamp:              <2016-09-14 13:42:12 jfulton> 
 # -------------------------------------------------------
 # Gets heat deployment-show data as described in: 
 #  http://hardysteven.blogspot.com/2015/04/debugging-tripleo-heat-templates.html
@@ -26,9 +26,9 @@ function show_details {
 	    echo "print d['deploy_stdout']" >> $py_hack
 	    # ... uggggghhh ....
 	    python $py_hack | sed -e s/'u001b'//g -e s/'\\/'/g -e s/'\[0m'//g -e s/'\[m'//g  > /tmp/heat-$id.log 
-	    echo -e "#Try: \n\tcat /tmp/heat-$id.log | ccze -A | less -R \n"
+	    echo -e "cat /tmp/heat-$id.log"
 	else
-	    echo -e "#Try: \n\tcat /tmp/heat-$id | ccze -A | less -R \n"
+	    echo -e "cat /tmp/heat-$id"
 	fi
     done 
 }

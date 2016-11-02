@@ -144,7 +144,7 @@ export NODE_COUNT=2
 export TESTENV_ARGS="--baremetal-bridge-names 'brbm brbm1 brbm2'"
 
 # overcloud VMs
-export NODE_CPU=1
+export NODE_CPU=2
 export NODE_MEM=8192
 export NODE_DISK=40
 

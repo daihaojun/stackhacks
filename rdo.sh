@@ -140,12 +140,12 @@ fi
 
 export NODE_DIST=centos7
 export DIB_LOCAL_IMAGE=$IMG
-export NODE_COUNT=3
+export NODE_COUNT=2
 export TESTENV_ARGS="--baremetal-bridge-names 'brbm brbm1 brbm2'"
 
 # overcloud VMs
 export NODE_CPU=1
-export NODE_MEM=5120
+export NODE_MEM=8192
 export NODE_DISK=40
 
 # undercloud VM

@@ -26,5 +26,5 @@ if [ $CLEAN -eq 1 ]; then
 fi
 
 ~/tripleo-ci/scripts/tripleo.sh --repo-setup
-~/tripleo-ci/scripts/tripleo.sh --overcloud-images
+#~/tripleo-ci/scripts/tripleo.sh --overcloud-images
 

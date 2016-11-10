@@ -9,6 +9,9 @@ parameter_defaults:
   ComputeCount: 0
   CephStorageCount: 0
   ExternallyManagedCount: 2
+
+  ExternallyManagedSchedulerHints:
+    'capabilities:node': 'externally-managed-%index%'
   
   ExternallyManagedIPs:
     storage:

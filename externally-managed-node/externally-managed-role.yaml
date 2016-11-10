@@ -1,0 +1,13 @@
+- name: ExternallyManaged
+  CountDefault: 0
+  HostnameFormatDefault: '%stackname%-externally-managed-%index%'
+  ServicesDefault:
+    - OS::TripleO::Services::CACerts
+    - OS::TripleO::Services::Kernel
+    - OS::TripleO::Services::Ntp
+    - OS::TripleO::Services::Timezone
+    - OS::TripleO::Services::TripleoPackages
+    - OS::TripleO::Services::TripleoFirewall
+    - OS::TripleO::Services::SensuClient
+    - OS::TripleO::Services::FluentdClient
+    - OS::TripleO::Services::VipHosts

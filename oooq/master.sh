@@ -20,7 +20,7 @@ if [ $CLONEQ -eq 1 ]; then
 fi    
 
 if [ $RUNQ -eq 1 ]; then
-    bash quickstart.sh --teardown nodes --release master-tripleo-ci -e @myconfigfile.yml $VIRTHOST    
+    bash quickstart.sh -e supported_distro_check=false --teardown nodes --release master-tripleo-ci -e @myconfigfile.yml $VIRTHOST    
 fi
 
 if [ $DISK -eq 1 ]; then

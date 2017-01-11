@@ -2,9 +2,9 @@
 # Filename:                master.sh
 # Description:             Sets up my dev env
 # Supported Langauge(s):   GNU Bash 4.3.x
-# Time-stamp:              <2017-01-10 23:31:28 jfulton> 
+# Time-stamp:              <2017-01-10 23:33:17 jfulton> 
 # -------------------------------------------------------
-CLONEQ=0
+CLONEQ=1
 RUNQ=1
 DISK=1
 IMG=1

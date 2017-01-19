@@ -37,7 +37,7 @@ for repo in "${repos[@]}"; do
     if [ ! -d ~/$dir ]; then
 	git clone https://git.openstack.org/$repo.git
 	pushd $dir
-	git remote add gerrit ssh://$gerrit_user@review.openstack.org:29418/$repos.git
+	git remote add gerrit ssh://$gerrit_user@review.openstack.org:29418/$repo.git
 	git review -s
 	popd
     else
